@@ -1,0 +1,339 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V9.50.1.380/W64 for ARM         21/Dec/2023  17:14:06
+# Copyright 1999-2023 IAR Systems AB.
+#
+#    Cpu mode                     =  thumb
+#    Endian                       =  little
+#    Source file                  =
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\servo.c
+#    Command line                 =
+#        -f
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\Obj\user_8514941877209965082.dir\servo.o.rsp
+#        (C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\servo.c
+#        -D USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\List\user_8514941877209965082.dir
+#        -o
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\Obj\user_8514941877209965082.dir
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program Files\IAR
+#        Systems\Embedded Workbench 9.2\arm\inc\c\DLib_Config_Normal.h" -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Libraries\CMSIS\DeviceSupport\
+#        -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Libraries\CMSIS\DeviceSupport\Startup\
+#        -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
+#        -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
+#        -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Libraries\LCD\
+#        -I C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\
+#        -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\inc\
+#        -Ol -I "C:\Program Files\IAR Systems\Embedded Workbench
+#        9.2\arm\CMSIS\Core\Include\\") --dependencies=n
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\Obj\user_8514941877209965082.dir\servo.o.iar_deps
+#    Locale                       =  C
+#    List file                    =
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\List\user_8514941877209965082.dir\servo.lst
+#    Object file                  =
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\Obj\user_8514941877209965082.dir\servo.o
+#    Runtime model:                  
+#      __CPP_Runtime              =  1
+#      __SystemLibrary            =  DLib
+#      __dlib_file_descriptor     =  0
+#      __dlib_full_locale_support =  0
+#      __dlib_version             =  6
+#
+###############################################################################
+
+C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\servo.c
+      1          #include "servo.h"
+      2          
+
+   \                                 In section .text, align 2, keep-with-next
+      3          void SERVO_Configure(PWM* pwm)
+      4          {
+   \                     SERVO_Configure: (+1)
+   \        0x0   0xB510             PUSH     {R4,LR}
+   \        0x2   0xB088             SUB      SP,SP,#+32
+   \        0x4   0x0004             MOVS     R4,R0
+      5              RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+   \        0x6   0x2101             MOVS     R1,#+1
+   \        0x8   0x2004             MOVS     R0,#+4
+   \        0xA   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+      6              RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);
+   \        0xE   0x2101             MOVS     R1,#+1
+   \       0x10   0x2008             MOVS     R0,#+8
+   \       0x12   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+      7              //  APB1 clock (TIM3,4) enable
+      8              RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
+   \       0x16   0x2101             MOVS     R1,#+1
+   \       0x18   0x2002             MOVS     R0,#+2
+   \       0x1A   0x.... 0x....      BL       RCC_APB1PeriphClockCmd
+      9              RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+   \       0x1E   0x2101             MOVS     R1,#+1
+   \       0x20   0x2004             MOVS     R0,#+4
+   \       0x22   0x.... 0x....      BL       RCC_APB1PeriphClockCmd
+     10              //  APB2
+     11              RCC_APB2PeriphClockCmd(RCC_APB2Periph_AFIO, ENABLE);
+   \       0x26   0x2101             MOVS     R1,#+1
+   \       0x28   0x2001             MOVS     R0,#+1
+   \       0x2A   0x.... 0x....      BL       RCC_APB2PeriphClockCmd
+     12            
+     13              GPIO_InitTypeDef GPIO_InitStructure; 
+     14              GPIO_InitStructure.GPIO_Pin = pwm->gpio_pin;
+   \       0x2E   0x8B20             LDRH     R0,[R4, #+24]
+   \       0x30   0xF8AD 0x0000      STRH     R0,[SP, #+0]
+     15              GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+   \       0x34   0x2003             MOVS     R0,#+3
+   \       0x36   0xF88D 0x0002      STRB     R0,[SP, #+2]
+     16              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP; // Alternate Function
+   \       0x3A   0x2018             MOVS     R0,#+24
+   \       0x3C   0xF88D 0x0003      STRB     R0,[SP, #+3]
+     17              GPIO_Init(pwm->gpio_port, &GPIO_InitStructure);
+   \       0x40   0x4669             MOV      R1,SP
+   \       0x42   0x6960             LDR      R0,[R4, #+20]
+   \       0x44   0x.... 0x....      BL       GPIO_Init
+     18              
+     19              TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+     20              TIM_OCInitTypeDef TIM_OCInitStructure;
+     21          
+     22              // TIMER
+     23              TIM_TimeBaseStructure.TIM_Period= 20000-1;
+   \       0x48   0xF644 0x601F      MOVW     R0,#+19999
+   \       0x4C   0xF8AD 0x0018      STRH     R0,[SP, #+24]
+     24              TIM_TimeBaseStructure.TIM_Prescaler= (uint16_t)(SystemCoreClock/1000000)-1;
+   \       0x50   0x....             LDR.N    R0,??DataTable0
+   \       0x52   0x6801             LDR      R1,[R0, #+0]
+   \       0x54   0x....             LDR.N    R0,??DataTable0_1
+   \       0x56   0xFBB1 0xF0F0      UDIV     R0,R1,R0
+   \       0x5A   0x1E40             SUBS     R0,R0,#+1
+   \       0x5C   0xF8AD 0x0014      STRH     R0,[SP, #+20]
+     25              TIM_TimeBaseStructure.TIM_ClockDivision = 0;
+   \       0x60   0x2000             MOVS     R0,#+0
+   \       0x62   0xF8AD 0x001A      STRH     R0,[SP, #+26]
+     26              TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Down;
+   \       0x66   0x2010             MOVS     R0,#+16
+   \       0x68   0xF8AD 0x0016      STRH     R0,[SP, #+22]
+     27              TIM_TimeBaseInit(pwm->timer, &TIM_TimeBaseStructure);
+   \       0x6C   0xA905             ADD      R1,SP,#+20
+   \       0x6E   0x68E0             LDR      R0,[R4, #+12]
+   \       0x70   0x.... 0x....      BL       TIM_TimeBaseInit
+     28                
+     29              // PWM init
+     30              TIM_OCInitStructure.TIM_OCMode      = pwm -> OCMode;
+   \       0x74   0x88A0             LDRH     R0,[R4, #+4]
+   \       0x76   0xF8AD 0x0004      STRH     R0,[SP, #+4]
+     31              TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
+   \       0x7A   0x2000             MOVS     R0,#+0
+   \       0x7C   0xF8AD 0x000C      STRH     R0,[SP, #+12]
+     32              TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
+   \       0x80   0x2001             MOVS     R0,#+1
+   \       0x82   0xF8AD 0x0006      STRH     R0,[SP, #+6]
+     33              TIM_OCInitStructure.TIM_Pulse       = 1500;
+   \       0x86   0xF240 0x50DC      MOVW     R0,#+1500
+   \       0x8A   0xF8AD 0x000A      STRH     R0,[SP, #+10]
+     34              
+     35              switch(pwm->channel){
+   \       0x8E   0x6820             LDR      R0,[R4, #+0]
+   \       0x90   0x2801             CMP      R0,#+1
+   \       0x92   0xD006             BEQ.N    ??SERVO_Configure_0
+   \       0x94   0xD329             BCC.N    ??SERVO_Configure_1
+   \       0x96   0x2803             CMP      R0,#+3
+   \       0x98   0xD015             BEQ.N    ??SERVO_Configure_2
+   \       0x9A   0xD30B             BCC.N    ??SERVO_Configure_3
+   \       0x9C   0x2804             CMP      R0,#+4
+   \       0x9E   0xD01B             BEQ.N    ??SERVO_Configure_4
+   \       0xA0   0xE023             B.N      ??SERVO_Configure_1
+     36              case 1:
+     37                TIM_OC1Init(pwm->timer, &TIM_OCInitStructure);
+   \                     ??SERVO_Configure_0: (+1)
+   \       0xA2   0xA901             ADD      R1,SP,#+4
+   \       0xA4   0x68E0             LDR      R0,[R4, #+12]
+   \       0xA6   0x.... 0x....      BL       TIM_OC1Init
+     38                TIM_OC1PreloadConfig(pwm->timer, TIM_OCPreload_Disable);
+   \       0xAA   0x2100             MOVS     R1,#+0
+   \       0xAC   0x68E0             LDR      R0,[R4, #+12]
+   \       0xAE   0x.... 0x....      BL       TIM_OC1PreloadConfig
+     39                break;
+   \       0xB2   0xE01A             B.N      ??SERVO_Configure_5
+     40              case 2:
+     41                TIM_OC2Init(pwm->timer, &TIM_OCInitStructure);
+   \                     ??SERVO_Configure_3: (+1)
+   \       0xB4   0xA901             ADD      R1,SP,#+4
+   \       0xB6   0x68E0             LDR      R0,[R4, #+12]
+   \       0xB8   0x.... 0x....      BL       TIM_OC2Init
+     42                TIM_OC2PreloadConfig(pwm->timer, TIM_OCPreload_Disable);
+   \       0xBC   0x2100             MOVS     R1,#+0
+   \       0xBE   0x68E0             LDR      R0,[R4, #+12]
+   \       0xC0   0x.... 0x....      BL       TIM_OC2PreloadConfig
+     43                break;
+   \       0xC4   0xE011             B.N      ??SERVO_Configure_5
+     44              case 3:
+     45                TIM_OC3Init(pwm->timer, &TIM_OCInitStructure);
+   \                     ??SERVO_Configure_2: (+1)
+   \       0xC6   0xA901             ADD      R1,SP,#+4
+   \       0xC8   0x68E0             LDR      R0,[R4, #+12]
+   \       0xCA   0x.... 0x....      BL       TIM_OC3Init
+     46                TIM_OC3PreloadConfig(pwm->timer, TIM_OCPreload_Disable);
+   \       0xCE   0x2100             MOVS     R1,#+0
+   \       0xD0   0x68E0             LDR      R0,[R4, #+12]
+   \       0xD2   0x.... 0x....      BL       TIM_OC3PreloadConfig
+     47                break;
+   \       0xD6   0xE008             B.N      ??SERVO_Configure_5
+     48              case 4:
+     49                TIM_OC4Init(pwm->timer, &TIM_OCInitStructure);
+   \                     ??SERVO_Configure_4: (+1)
+   \       0xD8   0xA901             ADD      R1,SP,#+4
+   \       0xDA   0x68E0             LDR      R0,[R4, #+12]
+   \       0xDC   0x.... 0x....      BL       TIM_OC4Init
+     50                TIM_OC4PreloadConfig(pwm->timer, TIM_OCPreload_Disable);
+   \       0xE0   0x2100             MOVS     R1,#+0
+   \       0xE2   0x68E0             LDR      R0,[R4, #+12]
+   \       0xE4   0x.... 0x....      BL       TIM_OC4PreloadConfig
+     51                break;
+   \       0xE8   0xE7FF             B.N      ??SERVO_Configure_5
+     52              default:
+     53                break;
+     54              }
+     55              
+     56              TIM_ARRPreloadConfig(pwm->timer, ENABLE);
+   \                     ??SERVO_Configure_1: (+1)
+   \                     ??SERVO_Configure_5: (+1)
+   \       0xEA   0x2101             MOVS     R1,#+1
+   \       0xEC   0x68E0             LDR      R0,[R4, #+12]
+   \       0xEE   0x.... 0x....      BL       TIM_ARRPreloadConfig
+     57              TIM_Cmd(pwm->timer,ENABLE);
+   \       0xF2   0x2101             MOVS     R1,#+1
+   \       0xF4   0x68E0             LDR      R0,[R4, #+12]
+   \       0xF6   0x.... 0x....      BL       TIM_Cmd
+     58          }
+   \       0xFA   0xB008             ADD      SP,SP,#+32
+   \       0xFC   0xBD10             POP      {R4,PC}
+     59          
+
+   \                                 In section .text, align 2, keep-with-next
+     60          void SERVO_Rotate(PWM* pwm, int degree){
+   \                     SERVO_Rotate: (+1)
+   \        0x0   0xB5F8             PUSH     {R3-R7,LR}
+     61              // 0 ~ 180 degree movement
+     62              int pwm_pulse = ((2300 - 700) / 180) * (degree - 15) + 700;
+   \        0x2   0x00C9             LSLS     R1,R1,#+3
+   \        0x4   0xF511 0x7111      ADDS     R1,R1,#+580
+     63              TIM_OCInitTypeDef tim_oc_init_struct;
+     64              tim_oc_init_struct.TIM_OCMode      = pwm->OCMode;
+   \        0x8   0x8882             LDRH     R2,[R0, #+4]
+   \        0xA   0xF8AD 0x2000      STRH     R2,[SP, #+0]
+     65              tim_oc_init_struct.TIM_OCPolarity  = TIM_OCPolarity_High;
+   \        0xE   0x2200             MOVS     R2,#+0
+   \       0x10   0xF8AD 0x2008      STRH     R2,[SP, #+8]
+     66              tim_oc_init_struct.TIM_OutputState = TIM_OutputState_Enable;
+   \       0x14   0x2201             MOVS     R2,#+1
+   \       0x16   0xF8AD 0x2002      STRH     R2,[SP, #+2]
+     67              tim_oc_init_struct.TIM_Pulse       = pwm_pulse;
+   \       0x1A   0xF8AD 0x1006      STRH     R1,[SP, #+6]
+     68              // ¥ìo¡¤©öAI ©÷A ©øO¨úiAU ¡ÆI
+     69              switch(pwm->channel){
+   \       0x1E   0x6801             LDR      R1,[R0, #+0]
+   \       0x20   0x2901             CMP      R1,#+1
+   \       0x22   0xD006             BEQ.N    ??SERVO_Rotate_0
+   \       0x24   0xD319             BCC.N    ??SERVO_Rotate_1
+   \       0x26   0x2903             CMP      R1,#+3
+   \       0x28   0xD00D             BEQ.N    ??SERVO_Rotate_2
+   \       0x2A   0xD307             BCC.N    ??SERVO_Rotate_3
+   \       0x2C   0x2904             CMP      R1,#+4
+   \       0x2E   0xD00F             BEQ.N    ??SERVO_Rotate_4
+   \       0x30   0xE013             B.N      ??SERVO_Rotate_1
+     70              case 1:
+     71                TIM_OC1Init(pwm->timer, &tim_oc_init_struct);
+   \                     ??SERVO_Rotate_0: (+1)
+   \       0x32   0x4669             MOV      R1,SP
+   \       0x34   0x68C0             LDR      R0,[R0, #+12]
+   \       0x36   0x.... 0x....      BL       TIM_OC1Init
+     72                break;
+   \       0x3A   0xE00E             B.N      ??SERVO_Rotate_5
+     73              case 2:
+     74                TIM_OC2Init(pwm->timer, &tim_oc_init_struct);
+   \                     ??SERVO_Rotate_3: (+1)
+   \       0x3C   0x4669             MOV      R1,SP
+   \       0x3E   0x68C0             LDR      R0,[R0, #+12]
+   \       0x40   0x.... 0x....      BL       TIM_OC2Init
+     75                break;
+   \       0x44   0xE009             B.N      ??SERVO_Rotate_5
+     76              case 3:
+     77                TIM_OC3Init(pwm->timer, &tim_oc_init_struct);
+   \                     ??SERVO_Rotate_2: (+1)
+   \       0x46   0x4669             MOV      R1,SP
+   \       0x48   0x68C0             LDR      R0,[R0, #+12]
+   \       0x4A   0x.... 0x....      BL       TIM_OC3Init
+     78                break;
+   \       0x4E   0xE004             B.N      ??SERVO_Rotate_5
+     79              case 4:
+     80                TIM_OC4Init(pwm->timer, &tim_oc_init_struct);
+   \                     ??SERVO_Rotate_4: (+1)
+   \       0x50   0x4669             MOV      R1,SP
+   \       0x52   0x68C0             LDR      R0,[R0, #+12]
+   \       0x54   0x.... 0x....      BL       TIM_OC4Init
+     81                break;
+   \       0x58   0xE7FF             B.N      ??SERVO_Rotate_5
+     82              default:
+     83                break;
+     84              }
+     85          }
+   \                     ??SERVO_Rotate_1: (+1)
+   \                     ??SERVO_Rotate_5: (+1)
+   \       0x5A   0xB005             ADD      SP,SP,#+20
+   \       0x5C   0xBD00             POP      {PC}
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable0:
+   \        0x0   0x....'....        DC32     SystemCoreClock
+
+   \                                 In section .text, align 4, keep-with-next
+   \                     ??DataTable0_1:
+   \        0x0   0x000F'4240        DC32     0xf4240
+
+   Maximum stack usage in bytes:
+
+   .cstack Function
+   ------- --------
+      40   SERVO_Configure
+        40   -> GPIO_Init
+        40   -> RCC_APB1PeriphClockCmd
+        40   -> RCC_APB2PeriphClockCmd
+        40   -> TIM_ARRPreloadConfig
+        40   -> TIM_Cmd
+        40   -> TIM_OC1Init
+        40   -> TIM_OC1PreloadConfig
+        40   -> TIM_OC2Init
+        40   -> TIM_OC2PreloadConfig
+        40   -> TIM_OC3Init
+        40   -> TIM_OC3PreloadConfig
+        40   -> TIM_OC4Init
+        40   -> TIM_OC4PreloadConfig
+        40   -> TIM_TimeBaseInit
+      24   SERVO_Rotate
+        24   -> TIM_OC1Init
+        24   -> TIM_OC2Init
+        24   -> TIM_OC3Init
+        24   -> TIM_OC4Init
+
+
+   Section sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       4  ??DataTable0
+       4  ??DataTable0_1
+     254  SERVO_Configure
+      94  SERVO_Rotate
+
+ 
+ 356 bytes in section .text
+ 
+ 356 bytes of CODE memory
+
+Errors: none
+Warnings: none

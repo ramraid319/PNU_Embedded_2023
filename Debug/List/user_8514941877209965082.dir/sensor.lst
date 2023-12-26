@@ -1,0 +1,125 @@
+###############################################################################
+#
+# IAR ANSI C/C++ Compiler V9.50.1.380/W64 for ARM         21/Dec/2023  17:14:06
+# Copyright 1999-2023 IAR Systems AB.
+#
+#    Cpu mode          =  thumb
+#    Endian            =  little
+#    Source file       =
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\sensor.c
+#    Command line      =
+#        -f
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\Obj\user_8514941877209965082.dir\sensor.o.rsp
+#        (C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\sensor.c
+#        -D USE_STDPERIPH_DRIVER -D STM32F10X_CL -lC
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\List\user_8514941877209965082.dir
+#        -o
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\Obj\user_8514941877209965082.dir
+#        --no_cse --no_unroll --no_inline --no_code_motion --no_tbaa
+#        --no_clustering --no_scheduling --debug --endian=little
+#        --cpu=Cortex-M3 -e --fpu=None --dlib_config "C:\Program Files\IAR
+#        Systems\Embedded Workbench 9.2\arm\inc\c\DLib_Config_Normal.h" -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Libraries\CMSIS\DeviceSupport\
+#        -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Libraries\CMSIS\DeviceSupport\Startup\
+#        -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Libraries\STM32F10x_StdPeriph_Driver_v3.5\inc\
+#        -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Libraries\STM32F10x_StdPeriph_Driver_v3.5\src\
+#        -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Libraries\LCD\
+#        -I C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\
+#        -I
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\inc\
+#        -Ol -I "C:\Program Files\IAR Systems\Embedded Workbench
+#        9.2\arm\CMSIS\Core\Include\\") --dependencies=n
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\Obj\user_8514941877209965082.dir\sensor.o.iar_deps
+#    Locale            =  C
+#    List file         =
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\List\user_8514941877209965082.dir\sensor.lst
+#    Object file       =
+#        C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\Obj\user_8514941877209965082.dir\sensor.o
+#    Runtime model:       
+#      __CPP_Runtime   =  1
+#      __SystemLibrary =  DLib
+#
+###############################################################################
+
+C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\sensor.c
+      1          /*#include "sensor.h"
+      2          
+      3          volatile uint32_t ADC_Value;
+      4          
+      5          void SENSOR_RCC_Configure(void)
+      6          {
+      7              RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOC | RCC_APB2Periph_GPIOD, ENABLE);
+      8              RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
+      9              RCC_APB2PeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
+     10          }
+     11          
+     12          void SENSOR_GPIO_Configure(void)
+     13          {
+     14              GPIO_InitTypeDef GPIO_InitStructure;
+     15          
+     16              //ADC12 Channel 11, 12, 13, 14
+     17              GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
+     18              GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+     19              GPIO_Init(GPIOC, &GPIO_InitStructure);
+     20          }
+     21          
+     22          void SENSOR_ADC_Configure(void)
+     23          {
+     24              ADC_InitTypeDef ADC_InitStructure;
+     25          
+     26              ADC_DeInit(ADC1);
+     27              ADC_InitStructure.ADC_Mode = ADC_Mode_Independent;
+     28              ADC_InitStructure.ADC_ScanConvMode = ENABLE;
+     29              ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
+     30              ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
+     31              ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
+     32              ADC_InitStructure.ADC_NbrOfChannel = 1;
+     33              ADC_Init(ADC1, &ADC_InitStructure);
+     34          
+     35              ADC_RegularChannelConfig(ADC1, ADC_Channel_11, 1, ADC_SampleTime_239Cycles5);
+     36              ADC_RegularChannelConfig(ADC1, ADC_Channel_12, 2, ADC_SampleTime_239Cycles5);
+     37              ADC_RegularChannelConfig(ADC1, ADC_Channel_13, 3, ADC_SampleTime_239Cycles5);
+     38              ADC_RegularChannelConfig(ADC1, ADC_Channel_14, 4, ADC_SampleTime_239Cycles5);
+     39          
+     40              ADC_DMACmd(ADC1, ENABLE);
+     41              ADC_Cmd(ADC1, ENABLE);
+     42              ADC_ResetCalibration(ADC1);
+     43          
+     44              while(ADC_GetResetCalibrationStatus(ADC1));
+     45              ADC_StartCalibration(ADC1);
+     46          
+     47              while(ADC_GetCalibrationStatus(ADC1));
+     48              ADC_SoftwareStartConvCmd(ADC1, ENABLE);
+     49          }
+     50          
+     51          void SENSOR_DMA_Configure(void)
+     52          {
+     53              DMA_InitTypeDef DMA_InitStructure;
+     54            
+     55              DMA_DeInit(DMA1_Channel1);
+     56              DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&(ADC1->DR);
+     57              DMA_InitStructure.DMA_MemoryBaseAddr = (uint32_t) &ADC_Value;
+     58              DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralSRC;
+     59              DMA_InitStructure.DMA_BufferSize = 2;
+     60              DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+     61              DMA_InitStructure.DMA_MemoryInc=DMA_MemoryInc_Enable;
+     62              DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Word;
+     63              DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Word;
+     64              DMA_InitStructure.DMA_Mode = DMA_Mode_Circular;
+     65              DMA_InitStructure.DMA_Priority = DMA_Priority_High;
+     66              DMA_InitStructure.DMA_M2M = DMA_M2M_Disable;
+     67              DMA_Init(DMA1_Channel1, &DMA_InitStructure);
+     68              DMA_Cmd(DMA1_Channel1, ENABLE);
+     69          }*/
+
+
+ 
+ 
+ 0 bytes of memory
+
+Errors: none
+Warnings: none

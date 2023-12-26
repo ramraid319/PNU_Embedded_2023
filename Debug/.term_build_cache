@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BuildDb>
+    <Tool>
+        <Name>linker</Name>
+        <Parent>
+            <Path>C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\Exe\term.out</Path>
+            <Output>
+                <Path>C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\List\term.map</Path>
+            </Output>
+            <Output>
+                <Path>C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\List\term.log</Path>
+            </Output>
+        </Parent>
+    </Tool>
+    <Tool>
+        <Name>compiler</Name>
+        <Parent>
+            <Path>C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\sensor.c</Path>
+            <Output>
+                <Path>C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\List\user_8514941877209965082.dir\sensor.lst</Path>
+            </Output>
+        </Parent>
+        <Parent>
+            <Path>C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\user\main.c</Path>
+            <Output>
+                <Path>C:\Users\junpy\Desktop\Projects\Codes\PNU_Embedded_2023_term\Debug\List\user_8514941877209965082.dir\main.lst</Path>
+            </Output>
+        </Parent>
+    </Tool>
+</BuildDb>
